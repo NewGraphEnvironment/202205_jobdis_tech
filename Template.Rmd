@@ -32,19 +32,18 @@ description: "My Description."
 
 ---
 
-
-```{r setup, include = TRUE, echo =T, message=FALSE, warning=FALSE}
+```{r switch-gitbook-html, echo=FALSE}
 gitbook_on <- TRUE
 # gitbook_on <- FALSE  ##we just need turn  this on and off to switch between gitbook and pdf via paged.js
 
+```
 
-knitr::opts_chunk$set(echo=T, message=FALSE, warning=FALSE, dpi=60, out.width = "100%")
+```{r setup, echo=identical(gitbook_on, TRUE), include = TRUE}
+knitr::opts_chunk$set(echo=identical(gitbook_on, TRUE), message=FALSE, warning=FALSE, dpi=60, out.width = "100%")
+# knitr::knit_hooks$set(webgl = hook_webgl)
 options(scipen=999)
 options(knitr.kable.NA = '--') #'--'
 options(knitr.kable.NAN = '--')
-
-
-
 ```
 
 ```{r settings-gitbook, eval= gitbook_on}
@@ -60,7 +59,7 @@ font_set <- 9
 
 
 ```{r}
-source('R/packages.R')
+source('scripts/packages.R')
 # source('R/functions.R')
 ```
 
@@ -81,7 +80,7 @@ Modern civilization has a long journey ahead to acknowledge and address the hist
 
 ```{js, logo-header, echo = FALSE, eval= T}
 title=document.getElementById('header');
-title.innerHTML = '<img src="fig/newgraph_tree.png" alt="NewGraph">' + title.innerHTML
+title.innerHTML = '<img src="fig/nge-icon_name_white.png" alt="NewGraph">' + title.innerHTML
 ```
 
 
@@ -118,39 +117,19 @@ knitr::kable(
 ## Project Location
 
 ```{r overview-map, fig.cap = 'Overview map of Study Areas',eval=T}
-knitr::include_graphics("fig/logo.png")
+knitr::include_graphics("fig/nge-icon_name_white.png")
 ```
 
 <br>
 
 ```{r hydrology-plot, fig.cap = 'Hydrograph for Bulkley River at Quick (Station #08EE004) and near Houston (Station #08EE003).', fig.show="hold", out.width= c("49.5%","1%","49.5%"), eval=T}
-knitr::include_graphics("fig/logo.png")
+knitr::include_graphics("fig/nge-icon_name_white.png")
 knitr::include_graphics("fig/pixel.png")
-knitr::include_graphics("fig/logo.png")
+knitr::include_graphics("fig/nge-icon_name_white.png")
 ```
 
 
 `r if(gitbook_on){knitr::asis_output("<br>")} else knitr::asis_output("<br><br><br><br>")`
-
-
-```{r fiss-species-table, eval=F}
-fiss_species_table <- readr::read_csv(paste0(getwd(), '/data/extracted_inputs/fiss_species_table.csv'))
-  # filter(`Species Code` != 'CT') %>% 
-# fiss_species_table %>%  
-#   my_kable(caption_text = 'Fish species recorded in the Bulkley River and Morice River watershed groups.')
-
-
-if(gitbook_on){
-fiss_species_table %>% 
-  my_kable_scroll(caption_text = 'Fish species recorded in the Bulkley River and Morice River watershed groups.')
-} else fiss_species_table[1:41, ] %>% 
-  my_kable(caption_text = 'Fish species recorded in the Bulkley River and Morice River watershed groups.')
-
-if(identical(gitbook_on, FALSE)){fiss_species_table[42:nrow(fiss_species_table), ] %>% 
-  my_kable()}
-
-```
-
 
 
 
